@@ -94,7 +94,7 @@ class CustomerDetailsPage extends React.Component<Props, State> {
       },
     };
     console.log(
-      'handleCustomerUpdated: customerWithMetadata:',
+      'handleCustomerUpdated: customerWithMetadata',
       customerWithMetadata
     );
 

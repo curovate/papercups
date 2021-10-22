@@ -49,6 +49,8 @@ export const CustomerDetailsSidebar = ({
   } = customer;
   const hasMetadata = !!metadata && Object.keys(metadata).length > 0;
 
+  console.log('logging metadata in sidebar:', metadata);
+
   return (
     <Card sx={{minWidth: 320, maxWidth: 360}}>
       <Box p={3}>
