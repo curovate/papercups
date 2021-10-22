@@ -47,7 +47,7 @@ export const CustomerDetailsSidebar = ({
     phone,
     time_zone: timezone,
   } = customer;
-  // const hasMetadata = !!metadata && Object.keys(metadata).length > 0;
+  const hasMetadata = !!metadata && Object.keys(metadata).length > 0;
   console.log('logging metadata in sidebar:', metadata);
 
   return (
