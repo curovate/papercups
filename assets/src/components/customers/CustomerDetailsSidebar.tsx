@@ -48,7 +48,6 @@ export const CustomerDetailsSidebar = ({
     time_zone: timezone,
   } = customer;
   // const hasMetadata = !!metadata && Object.keys(metadata).length > 0;
-  const hasMetadata = true;
   console.log('logging metadata in sidebar:', metadata);
 
   return (
@@ -156,20 +155,14 @@ export const CustomerDetailsSidebar = ({
         {hasMetadata && (
           <>
             <CustomerDetailsSection title="Metadata">
-              {/* {Object.entries(metadata).map(([key, value]) => (
+              {Object.entries(metadata).map(([key, value]) => (
                 <CustomerDetailsProperty
                   icon={<InfoCircleOutlined style={{color: colors.primary}} />}
                   key={key}
                   name={key}
                   value={<CustomerDetailsPropertyValue value={value} />}
                 />
-              ))} */}
-              <CustomerDetailsProperty
-                icon={<InfoCircleOutlined style={{color: colors.primary}} />}
-                key="test"
-                name="test"
-                value={<CustomerDetailsPropertyValue value={'example'} />}
-              />
+              ))}
             </CustomerDetailsSection>
             <Divider />
           </>

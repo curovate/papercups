@@ -192,6 +192,23 @@ export const ConversationsDashboard = ({
   const isClosingSelected =
     !!selectedConversationId && closing.indexOf(selectedConversationId) !== -1;
   const conversation = getConversationById(selectedConversationId);
+  console.log('changing conversation to include metadata...');
+  const tempData = conversation?.customer?.email?.split('---');
+  const newMetadata = {
+    surgery: tempData !== undefined ? tempData[1] : '',
+    surgeryType: tempData !== undefined ? tempData[2] : '',
+    isPaid: tempData !== undefined ? tempData[3] : '',
+    age: tempData !== undefined ? tempData[4] : '',
+  };
+  const newEmail = tempData !== undefined ? tempData[0] : '';
+  if (conversation !== null) {
+    conversation.customer = {
+      ...conversation.customer,
+      email: newEmail,
+      metadata: newMetadata,
+    };
+  }
+  console.log('the new conversation data is...', conversation);
   const messages = getMessagesByConversationId(selectedConversationId);
 
   React.useEffect(() => {
