@@ -28,6 +28,7 @@ class CustomerDetailsPage extends React.Component<Props, State> {
   };
 
   async componentDidMount() {
+    console.log('component mounted and fetching customer data...');
     try {
       const [customer, session] = await Promise.all([
         this.fetchCustomer(),

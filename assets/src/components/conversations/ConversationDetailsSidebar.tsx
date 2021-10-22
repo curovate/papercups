@@ -77,6 +77,7 @@ export const CustomerDetails = ({
     timezone && timezone.length ? timezone.split('_').join(' ') : null;
 
   const exportCustomerData = async () => {
+    console.log('running exportCustomerData function...');
     try {
       const customer = await API.fetchCustomer(customerId, {
         expand: ['company', 'conversations', 'messages', 'tags', 'notes'],
