@@ -46,8 +46,27 @@ class CustomerDetailsPage extends React.Component<Props, State> {
       const {data: conversations} = await API.fetchConversations({
         customer_id: customerId,
       });
-
-      this.setState({customer, conversations, loading: false});
+      console.log('componentDidMount: customer without metadata:', customer);
+      const tempMetadata = customer.email.split(' ---');
+      const customerWithMetadata = {
+        ...customer,
+        email: customer.external_id,
+        metadata: {
+          isPaid: tempMetadata[1],
+          surgery: tempMetadata[2],
+          surgeryType: tempMetadata[3],
+        },
+      };
+      console.log(
+        'componentDidMount: customerWithMetadata:',
+        customerWithMetadata
+      );
+      // this.setState({customer, conversations, loading: false});
+      this.setState({
+        customer: customerWithMetadata,
+        conversations,
+        loading: false,
+      });
     } catch (err) {
       logger.error('Error loading customer!', err);
 
@@ -60,8 +79,26 @@ class CustomerDetailsPage extends React.Component<Props, State> {
       const customer = await API.fetchCustomer(this.getCustomerId(), {
         expand: ['company', 'tags'],
       });
-
-      this.setState({customer, loading: false});
+      console.log(
+        'handleRefreshCustomer: customer without metadata:',
+        customer
+      );
+      const tempMetadata = customer.email.split(' ---');
+      const customerWithMetadata = {
+        ...customer,
+        email: customer.external_id,
+        metadata: {
+          isPaid: tempMetadata[1],
+          surgery: tempMetadata[2],
+          surgeryType: tempMetadata[3],
+        },
+      };
+      // this.setState({customer, loading: false});
+      console.log(
+        'handleRefreshCustomer: customerWithMetadata:',
+        customerWithMetadata
+      );
+      this.setState({customer: customerWithMetadata, loading: false});
     } catch (err) {
       logger.error('Error loading customer!', err);
 

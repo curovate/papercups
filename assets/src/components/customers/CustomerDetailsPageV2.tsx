@@ -33,8 +33,22 @@ class CustomerDetailsPage extends React.Component<Props, State> {
         this.fetchCustomer(),
         this.fetchSession(),
       ]);
-
-      this.setState({customer, session, loading: false});
+      console.log('componentDidMount: customer without metadata:', customer);
+      const tempMetadata = customer.email.split(' ---');
+      const customerWithMetadata = {
+        ...customer,
+        email: customer.external_id,
+        metadata: {
+          isPaid: tempMetadata[1],
+          surgery: tempMetadata[2],
+          surgeryType: tempMetadata[3],
+        },
+      };
+      console.log(
+        'componentDidMount: customer wit metadata:',
+        customerWithMetadata
+      );
+      this.setState({customer: customerWithMetadata, session, loading: false});
     } catch (err) {
       logger.error('Error loading customer!', err);
 
@@ -63,7 +77,28 @@ class CustomerDetailsPage extends React.Component<Props, State> {
 
   handleCustomerUpdated = async () => {
     const customer = await this.fetchCustomer();
-    this.setState({customer});
+
+    console.log(
+      'handleCustomerUpdated: handleCustomerUpdated: customer without metadata:',
+      customer
+    );
+
+    const tempMetadata = customer.email.split(' ---');
+    const customerWithMetadata = {
+      ...customer,
+      email: customer.external_id,
+      metadata: {
+        isPaid: tempMetadata[1],
+        surgery: tempMetadata[2],
+        surgeryType: tempMetadata[3],
+      },
+    };
+    console.log(
+      'handleCustomerUpdated: customerWithMetadata:',
+      customerWithMetadata
+    );
+
+    this.setState({customer: customerWithMetadata});
     this.handleCloseEditModal();
   };
 
