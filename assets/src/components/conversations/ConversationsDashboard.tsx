@@ -191,24 +191,56 @@ export const ConversationsDashboard = ({
     conversations.length < pagination.total;
   const isClosingSelected =
     !!selectedConversationId && closing.indexOf(selectedConversationId) !== -1;
+
   const conversation = getConversationById(selectedConversationId);
-  console.log('changing conversation to include metadata...');
-  const tempData = conversation?.customer?.email?.split('---');
-  const newMetadata = {
-    surgery: tempData !== undefined ? tempData[1] : '',
-    surgeryType: tempData !== undefined ? tempData[2] : '',
-    isPaid: tempData !== undefined ? tempData[3] : '',
-    age: tempData !== undefined ? tempData[4] : '',
-  };
-  const newEmail = tempData !== undefined ? tempData[0] : '';
-  if (conversation !== null) {
-    conversation.customer = {
-      ...conversation.customer,
-      email: newEmail,
-      metadata: newMetadata,
+
+  const addMetadataToConversation = (conversation: Conversation | null) => {
+    console.log('changing conversation to include metadata...');
+    const tempData = conversation?.customer?.email?.split('---');
+    const newMetadata = {
+      Age: tempData !== undefined ? tempData[1] : '',
+      Gender: tempData !== undefined ? tempData[2] : '',
+      Surgery: tempData !== undefined ? tempData[3] : '',
+      'Surgery Subset': tempData !== undefined ? tempData[4] : '',
+      'Days Since Surgery': tempData !== undefined ? tempData[5] : '',
+      'Injury Date': tempData !== undefined ? tempData[6] : '',
+      'Days Since Injury': tempData !== undefined ? tempData[7] : '',
+      'Paying Member': tempData !== undefined ? tempData[10] : '',
+      'Signup Date': tempData !== undefined ? tempData[9] : '',
+      'Subscriber Type': tempData !== undefined ? tempData[11] : '',
+      'Subscriber Price': tempData !== undefined ? tempData[12] : '',
+      'Device Platform': tempData !== undefined ? tempData[13] : '',
+      Country: tempData !== undefined ? tempData[14] : '',
+      City: tempData !== undefined ? tempData[15] : '',
+      'Time Spent in Minutes': tempData !== undefined ? tempData[16] : '',
+      'Open App Count': tempData !== undefined ? tempData[17] : '',
+      'Compliance Average': tempData !== undefined ? tempData[18] : '',
+      'Flexion Average': tempData !== undefined ? tempData[19] : '',
+      'Extension Average': tempData !== undefined ? tempData[20] : '',
+      'Days of Exercise': tempData !== undefined ? tempData[21] : '',
+      'Sessions of Exercise': tempData !== undefined ? tempData[22] : '',
+      'Stages Completed': tempData !== undefined ? tempData[23] : '',
     };
-  }
-  console.log('the new conversation data is...', conversation);
+    const newEmail = tempData !== undefined ? tempData[0] : '';
+    if (conversation !== null) {
+      if (!conversation.customer.metadata) {
+        conversation.customer = {
+          ...conversation.customer,
+          email: newEmail,
+          metadata: newMetadata,
+        };
+      } else {
+        conversation.customer = {
+          ...conversation.customer,
+          email: newEmail,
+        };
+      }
+    }
+    console.log('the new conversation data is...', conversation);
+  };
+
+  addMetadataToConversation(conversation);
+
   const messages = getMessagesByConversationId(selectedConversationId);
 
   React.useEffect(() => {
