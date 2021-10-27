@@ -196,7 +196,7 @@ export const ConversationsDashboard = ({
 
   const addMetadataToConversation = (conversation: Conversation | null) => {
     console.log('changing conversation to include metadata...');
-    const tempData = conversation?.customer?.email?.split('---');
+    const tempData = conversation?.customer?.name?.split('---');
     const newMetadata = {
       Age: tempData !== undefined ? tempData[1] : '',
       Gender: tempData !== undefined ? tempData[2] : '',
@@ -205,8 +205,8 @@ export const ConversationsDashboard = ({
       'Days Since Surgery': tempData !== undefined ? tempData[5] : '',
       'Injury Date': tempData !== undefined ? tempData[6] : '',
       'Days Since Injury': tempData !== undefined ? tempData[7] : '',
-      'Paying Member': tempData !== undefined ? tempData[9] : '',
-      'Signup Date': tempData !== undefined ? tempData[8] : '',
+      'Paying Member': tempData !== undefined ? tempData[8].split('T')[0] : '',
+      'Signup Date': tempData !== undefined ? tempData[9] : '',
       'Is Subscriber': tempData !== undefined ? tempData[10] : '',
       'Subscriber Price': tempData !== undefined ? tempData[11] : '',
       'Device Platform': tempData !== undefined ? tempData[12] : '',
@@ -221,18 +221,13 @@ export const ConversationsDashboard = ({
       'Sessions of Exercise': tempData !== undefined ? tempData[21] : '',
       'Stages Completed': tempData !== undefined ? tempData[22] : '',
     };
-    const newEmail = tempData !== undefined ? tempData[0] : '';
+    const newName = tempData !== undefined ? tempData[0] : '';
     if (conversation !== null) {
       if (!conversation.customer.metadata) {
         conversation.customer = {
           ...conversation.customer,
-          email: newEmail,
           metadata: newMetadata,
-        };
-      } else {
-        conversation.customer = {
-          ...conversation.customer,
-          email: newEmail,
+          name: newName,
         };
       }
     }
