@@ -195,7 +195,7 @@ export const ConversationsDashboard = ({
   const conversation = getConversationById(selectedConversationId);
 
   const addMetadataToConversation = (conversation: Conversation | null) => {
-    console.log('changing conversation to include metadata...');
+    console.log('the conversation data is...', conversation);
     const tempData = conversation?.customer?.name?.split('---');
     const newMetadata = {
       Age: tempData !== undefined ? tempData[1] : '',
@@ -227,6 +227,11 @@ export const ConversationsDashboard = ({
         conversation.customer = {
           ...conversation.customer,
           metadata: newMetadata,
+          name: newName,
+        };
+      } else {
+        conversation.customer = {
+          ...conversation.customer,
           name: newName,
         };
       }
