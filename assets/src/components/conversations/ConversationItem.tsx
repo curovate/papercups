@@ -82,7 +82,8 @@ const ConversationItem = ({
               overflow: 'hidden',
             }}
           >
-            {name || email || 'Anonymous User'}
+            {/* NEW CODE --- change 'name' to name?.split('---)[0] because the name field contains metadata */}
+            {name?.split('---')[0] || email || 'Anonymous User'}
           </Text>
         </Flex>
 
