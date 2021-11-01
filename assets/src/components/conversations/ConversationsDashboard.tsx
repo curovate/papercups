@@ -195,7 +195,7 @@ export const ConversationsDashboard = ({
   const conversation = getConversationById(selectedConversationId);
 
   const addMetadataToConversation = (conversation: Conversation | null) => {
-    console.log('the conversation data is...', conversation);
+    // NEW CODE --- takes into account metadata being stored in the name field
     const tempData = conversation?.customer?.name?.split('---');
     const newMetadata = {
       Age: tempData !== undefined ? tempData[1] : '',
@@ -220,6 +220,7 @@ export const ConversationsDashboard = ({
       'Days of Exercise': tempData !== undefined ? tempData[21] : '',
       'Sessions of Exercise': tempData !== undefined ? tempData[22] : '',
       'Stages Completed': tempData !== undefined ? tempData[23] : '',
+      DOB: tempData !== undefined ? tempData[24] : '',
     };
     const newName = tempData !== undefined ? tempData[0] : '';
     if (conversation !== null) {
@@ -238,7 +239,7 @@ export const ConversationsDashboard = ({
     }
     console.log('the new conversation data is...', conversation);
   };
-
+  //
   addMetadataToConversation(conversation);
 
   const messages = getMessagesByConversationId(selectedConversationId);
